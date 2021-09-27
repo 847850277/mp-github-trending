@@ -18,3 +18,6 @@
 * unirest-java
 * fastjson
 * thumbnailator
+
+## 个人微信公众号,扫码可关注
+[![mp.png](https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzUyMTI5NzYxNQ==&mid=100000172&idx=1&sn=bc3b4153760cf4ffaeca3abd2925b607&send_time=1632733012)
