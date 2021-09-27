@@ -1,0 +1,9 @@
+server:
+  port: 8080
+#邮箱
+email:
+    username: ''
+    password: ''
+selenium:
+  driverPath: '/usr/bin/chromedriver'
+  chrome: '/usr/bin/google-chrome'
