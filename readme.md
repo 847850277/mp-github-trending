@@ -5,7 +5,7 @@
 
 ## 功能说明
 
-[![42USU0.png](https://z3.ax1x.com/2021/09/27/42USU0.png)](https://imgtu.com/i/42USU0)
+[![42WfW4.png](https://z3.ax1x.com/2021/09/27/42WfW4.png)](https://imgtu.com/i/42WfW4)
 
 
 ## 站在巨人的肩膀上
