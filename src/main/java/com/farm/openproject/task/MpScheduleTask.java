@@ -32,6 +32,7 @@ public class MpScheduleTask {
      * @throws Exception
      */
     @Scheduled(cron = "0 0 18 * * ?")
+    //@Scheduled(cron = "0 */10 * * * ?")
     private void configureTask() throws Exception{
         log.info("开始执行定时任务");
         // 禁用沙箱
@@ -44,7 +45,7 @@ public class MpScheduleTask {
         chromeOptions.addArguments("--start-maximized");
         WebDriver broser = new ChromeDriver(chromeOptions);
         //全局等待10s
-        broser.manage().timeouts().implicitlyWait(10000, TimeUnit.SECONDS);
+        broser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         broser.get("https://mp.weixin.qq.com/");
         //登陆区域
         broser.findElement(By.xpath("//*[@id='header']/div[2]/div/div")).click();
@@ -53,12 +54,22 @@ public class MpScheduleTask {
         File loginScreenShotFile = ((TakesScreenshot) broser).getScreenshotAs(OutputType.FILE);
         // 登陆图片的base64码
         String base64ImgStr = MpBroswerUtil.getLoginBase64ImgStr(loginScreenShotFile);
-        MpBroswerUtil.sendEmail(base64ImgStr);
+        MpBroswerUtil.sendEmail(base64ImgStr,0);
         //登陆成功后，写图文素材
+        Integer counter = 0;
         // 监听登陆成功
-        while (!MpBroswerUtil.successLogin(broser)){
-            Thread.sleep(1000);
+        while (counter < 180){
+            counter++;
             log.info("等待登陆中");
+            if(MpBroswerUtil.successLogin(broser)){
+                counter = 200;
+            }
+        }
+        if(counter >= 180 && counter < 200){
+            log.info("登陆等待超时：" + counter);
+            broser.close();
+            log.info("关闭浏览器成功");
+            return;
         }
         if(MpBroswerUtil.successLogin(broser)){
             log.info("登陆成功");
@@ -96,7 +107,7 @@ public class MpScheduleTask {
             File groupSendScreenShotFile = ((TakesScreenshot) broser).getScreenshotAs(OutputType.FILE);
             //发送群发截图邮件
             String grouSendBase64ImgStr = MpBroswerUtil.getGroupSendBase64ImgStr(groupSendScreenShotFile);
-            MpBroswerUtil.sendEmail(grouSendBase64ImgStr);
+            MpBroswerUtil.sendEmail(grouSendBase64ImgStr,0);
 
         }
         //等待半个小时后关闭
